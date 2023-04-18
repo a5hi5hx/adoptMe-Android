@@ -35,5 +35,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            <meta-data android:name="com.onesignal.NotificationServiceExtension"
+     android:value="project.macpokhara.adoptme.NotificationServiceExtension" />
     </application>
 </manifest>

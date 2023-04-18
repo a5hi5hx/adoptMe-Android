@@ -19,7 +19,7 @@ class PetBookDetails extends StatefulWidget {
 class _PetBookDetailsState extends State<PetBookDetails> {
   //late List<UserDetails> users = [];
   bool _isLoading = false;
-  @override
+
   // void initState() {
   //   super.initState();
   //   //getUserDetails(widget.pet.uid);
@@ -41,6 +41,237 @@ class _PetBookDetailsState extends State<PetBookDetails> {
   //     _showMaterialDialog("Error", e.toString());
   //   }
   // }
+  Future deleteBooking() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      final data = {'bookingId': widget.bookings.id};
+
+      Response response =
+          await Dio().post("${Constants.uri}/delete/removeBooking", data: data);
+      if (response.statusCode == 200) {
+        showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: const Text("Success"),
+                  content: Text(response.data["msg"]),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                MyPetsBookings()));
+                      },
+                      child: Container(
+                        color: Colors.blue,
+                        padding: const EdgeInsets.all(14),
+                        child: const Text(
+                          "OK",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ));
+      }
+      // setState(() {
+      //   refresh();
+      // });
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        case 500:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        default:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.toString()),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+      }
+    }
+  }
+
+  Future successBooking() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      final data = {'bookingId': widget.bookings.id};
+
+      Response response = await Dio()
+          .post("${Constants.uri}/delete/successBooking", data: data);
+      if (response.statusCode == 200) {
+        showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: const Text("Success"),
+                  content: Text(response.data["msg"]),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                MyPetsBookings()));
+                      },
+                      child: Container(
+                        color: Colors.blue,
+                        padding: const EdgeInsets.all(14),
+                        child: const Text(
+                          "OK",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ));
+      }
+      // setState(() {
+      //   refresh();
+      // });
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        case 500:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        default:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.toString()),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -500,14 +731,44 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                                   CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                Image(
-                                                  image:
-                                                      CachedNetworkImageProvider(
-                                                          widget.bookings.user
-                                                              .urlImage),
-                                                  height: 80,
-                                                  width: 60,
-                                                  fit: BoxFit.cover,
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                      PageRouteBuilder(
+                                                        pageBuilder: (context,
+                                                                animation,
+                                                                secondaryAnimation) =>
+                                                            ImageScreen(
+                                                                imageUrl: widget
+                                                                    .bookings
+                                                                    .user
+                                                                    .urlImage),
+                                                        transitionsBuilder:
+                                                            (context,
+                                                                animation,
+                                                                secondaryAnimation,
+                                                                child) {
+                                                          return child;
+                                                        },
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: SizedBox(
+                                                    child: Hero(
+                                                      tag: 'imageTag',
+                                                      child: Image(
+                                                        image:
+                                                            CachedNetworkImageProvider(
+                                                                widget
+                                                                    .bookings
+                                                                    .user
+                                                                    .urlImage),
+                                                        height: 60,
+                                                        width: 60,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
                                                 Expanded(
                                                   flex: 1,
@@ -567,132 +828,6 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                                             ),
                                                           ),
                                                         ),
-                                                        Padding(
-                                                          padding: EdgeInsets
-                                                              .fromLTRB(
-                                                                  0, 4, 0, 0),
-                                                          child: Text(
-                                                            "${widget.bookings.user.mobile} , ${widget.bookings.user.phone}",
-                                                            textAlign:
-                                                                TextAlign.start,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .clip,
-                                                            style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w700,
-                                                              fontStyle:
-                                                                  FontStyle
-                                                                      .normal,
-                                                              fontSize: 22,
-                                                              color: Color(
-                                                                  0xff000000),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          0,
-                                                                          4,
-                                                                          5,
-                                                                          0),
-                                                              child: Text(
-                                                                widget.bookings
-                                                                    .user.email,
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .justify,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .clip,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .normal,
-                                                                  fontSize: 20,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceEvenly,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          0,
-                                                                          4,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                "Reserved For Date:  \n${widget.bookings.date}",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .clip,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .normal,
-                                                                  fontSize: 22,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          0,
-                                                                          4,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                "Reserved For Time: \n${widget.bookings.time}",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .clip,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .normal,
-                                                                  fontSize: 22,
-                                                                  color: Color(
-                                                                      0xff000000),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -701,6 +836,111 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                             ),
                                           ],
                                         ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0, 4, 0, 0),
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Phone 1: ${widget.bookings.user.mobile}",
+                                                    textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.clip,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontStyle:
+                                                          FontStyle.normal,
+                                                      fontSize: 22,
+                                                      color: Color(0xff000000),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "Phone 2: ${widget.bookings.user.phone}",
+                                                    textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.clip,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontStyle:
+                                                          FontStyle.normal,
+                                                      fontSize: 22,
+                                                      color: Color(0xff000000),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 4, 5, 0),
+                                                  child: Text(
+                                                    "E-Mail:${widget.bookings.user.email}",
+                                                    textAlign:
+                                                        TextAlign.justify,
+                                                    overflow: TextOverflow.clip,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontStyle:
+                                                          FontStyle.normal,
+                                                      fontSize: 20,
+                                                      color: Color(0xff000000),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 4, 0, 0),
+                                                  child: Text(
+                                                    "Reserved For Date:  \n${widget.bookings.date}",
+                                                    textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.clip,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontStyle:
+                                                          FontStyle.normal,
+                                                      fontSize: 22,
+                                                      color: Color(0xff000000),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 4, 0, 0),
+                                                  child: Text(
+                                                    "Reserved For Time: \n${widget.bookings.time}",
+                                                    textAlign: TextAlign.start,
+                                                    overflow: TextOverflow.clip,
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontStyle:
+                                                          FontStyle.normal,
+                                                      fontSize: 22,
+                                                      color: Color(0xff000000),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     ),
                                     Align(
@@ -710,38 +950,137 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                         padding: EdgeInsets.all(8),
                                         width:
                                             MediaQuery.of(context).size.width,
-                                        height: 60,
+                                        height: 135,
                                         decoration: BoxDecoration(
                                           color: Color(0x003a57e8),
                                           shape: BoxShape.rectangle,
                                           borderRadius: BorderRadius.zero,
                                         ),
-                                        child: MaterialButton(
-                                          onPressed: () {
-                                            showSnackBar(
-                                                context, "Paxi add garumla");
-                                          },
-                                          color: Color(0xff245cb5),
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.zero,
-                                            side: BorderSide(
-                                                color: Color(0xff808080),
-                                                width: 1),
-                                          ),
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 8),
-                                          textColor: Color(0xffffffff),
-                                          height: 50,
-                                          minWidth: 140,
-                                          child: Text(
-                                            "Remove Booking",
-                                            style: TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.w400,
-                                              fontStyle: FontStyle.normal,
+                                        child: Column(
+                                          children: [
+                                            MaterialButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      Widget cancelButton =
+                                                          TextButton(
+                                                        child: Text("Cancel"),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop(); // dismiss dialog
+                                                        },
+                                                      );
+                                                      Widget okButton =
+                                                          TextButton(
+                                                              child: Text(
+                                                                  "Cheers"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                                successBooking();
+                                                                //deletePets(pets[index]);
+                                                              });
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                            "Congratulations"),
+                                                        content: Text(
+                                                            "Congrats for Successful Adoption. Cheers"),
+                                                        actions: [
+                                                          cancelButton,
+                                                          okButton,
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                              color: Color(0xff245cb5),
+                                              elevation: 5,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                side: BorderSide(
+                                                    color: Color(0xff808080),
+                                                    width: 1),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 16, vertical: 8),
+                                              textColor: Color(0xffffffff),
+                                              height: 50,
+                                              minWidth: 140,
+                                              child: Text(
+                                                "Adoption Success",
+                                                style: TextStyle(
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontStyle: FontStyle.normal,
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      Widget cancelButton =
+                                                          TextButton(
+                                                        child: Text("Cancel"),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop(); // dismiss dialog
+                                                        },
+                                                      );
+                                                      Widget okButton =
+                                                          TextButton(
+                                                              child: Text(
+                                                                  "Delete"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                                deleteBooking();
+                                                              });
+                                                      return AlertDialog(
+                                                        title: Text(
+                                                            "Confirm Action"),
+                                                        content: Text(
+                                                            "Do you wish to remove the reservations and relist? It is an non returnable action once commenced."),
+                                                        actions: [
+                                                          cancelButton,
+                                                          okButton,
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                              color: Color(0xff245cb5),
+                                              elevation: 5,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                side: BorderSide(
+                                                    color: Color(0xff808080),
+                                                    width: 1),
+                                              ),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 16, vertical: 8),
+                                              textColor: Color(0xffffffff),
+                                              height: 50,
+                                              minWidth: 140,
+                                              child: Text(
+                                                "Remove Booking and relist",
+                                                style: TextStyle(
+                                                  fontSize: 22,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontStyle: FontStyle.normal,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),

@@ -26,6 +26,7 @@ class AddService {
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var userID = prefs.getString('_uid');
+    var playerId = prefs.getString('playerId');
     //  print(userID);
 
     Dio dio = Dio();
@@ -45,6 +46,7 @@ class AddService {
       //"uid": "5f3d4b3c5d8e4f3d4b3c5d8e",
       "uid": userID,
       "gender": gender,
+      "playerId": playerId
     });
 
     try {

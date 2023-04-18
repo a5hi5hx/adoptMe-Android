@@ -20,6 +20,7 @@ class _HomeBirdsState extends State<HomeBirds> {
   String? urlImageUser;
   String? nameUser;
   String? emailUser;
+  bool _isEmpty = true;
   //final AuthService authService = AuthService();
   void signOutUser(BuildContext context) {
     AuthService().signOutuser(context);
@@ -49,6 +50,9 @@ class _HomeBirdsState extends State<HomeBirds> {
       setState(() {
         pets = (response.data as List).map((pet) => Pet.fromJson(pet)).toList();
         if (pets.isEmpty) {
+          setState(() {
+            _isEmpty = true;
+          });
           _showMaterialDialog("Empty", "No data to show");
         }
         _isLoading = false;
@@ -66,8 +70,11 @@ class _HomeBirdsState extends State<HomeBirds> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomeBirds()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => HomeBirds()));
                         },
                         child: Container(
                           color: Colors.blue,
@@ -91,8 +98,9 @@ class _HomeBirdsState extends State<HomeBirds> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomeBirds()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
                           // Navigator.of(context).pop();
                         },
                         child: Container(
@@ -117,8 +125,9 @@ class _HomeBirdsState extends State<HomeBirds> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomeBirds()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
                           // Navigator.of(context).pop();
                         },
                         child: Container(
@@ -275,79 +284,88 @@ class _HomeBirdsState extends State<HomeBirds> {
                   onRefresh: refresh,
                   child: _isLoading
                       ? Center(child: CircularProgressIndicator())
-                      : ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          itemCount: pets.length,
-                          itemBuilder: (context, index) {
-                            //final pet = pets[index];
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PetDetails(
-                                      pet: pets[index],
-                                      userID: userID as String,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Container(
-                                  height: 150,
-                                  width: constraints.maxWidth * 0.95,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(
-                                        MediaQuery.of(context).size.width *
-                                            0.05),
-                                  ),
-                                  child: LayoutBuilder(
-                                      builder: (context, constraints) {
-                                    return Center(
-                                      child: SizedBox(
-                                        height: constraints.maxHeight * 0.85,
-                                        width: constraints.maxWidth * 0.93,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            CardPerfil(
-                                              height:
-                                                  constraints.maxWidth * 0.33,
-                                              width:
-                                                  constraints.maxWidth * 0.33,
-                                              color: Colors.blue.shade200,
-                                              link: pets[index].imageUrl,
-                                            ),
-                                            CardTexts(
-                                              widthA:
-                                                  constraints.maxWidth * 0.4,
-                                              name: pets[index].nickname,
-                                              race: pets[index].breed,
-                                              old: pets[index].age,
-                                              sex: pets[index].gender,
-                                              distance: pets[index].location,
-                                            ),
-                                            CardIcon(
-                                              stars: pets[index].stars,
-                                              width:
-                                                  constraints.maxWidth * 0.13,
-                                              height:
-                                                  constraints.maxHeight * 0.4,
-                                              sizeIcon:
-                                                  constraints.maxHeight * 0.24,
-                                            )
-                                          ],
+                      : _isEmpty
+                          ? Center(
+                              child: DataNotFound(),
+                            )
+                          : ListView.builder(
+                              scrollDirection: Axis.vertical,
+                              itemCount: pets.length,
+                              itemBuilder: (context, index) {
+                                //final pet = pets[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PetDetails(
+                                          pet: pets[index],
+                                          userID: userID as String,
                                         ),
                                       ),
                                     );
-                                  }),
-                                ),
-                              ),
-                            );
-                          }),
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5),
+                                    child: Container(
+                                      height: 150,
+                                      width: constraints.maxWidth * 0.95,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(
+                                            MediaQuery.of(context).size.width *
+                                                0.05),
+                                      ),
+                                      child: LayoutBuilder(
+                                          builder: (context, constraints) {
+                                        return Center(
+                                          child: SizedBox(
+                                            height:
+                                                constraints.maxHeight * 0.85,
+                                            width: constraints.maxWidth * 0.93,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                CardPerfil(
+                                                  height: constraints.maxWidth *
+                                                      0.33,
+                                                  width: constraints.maxWidth *
+                                                      0.33,
+                                                  color: Colors.blue.shade200,
+                                                  link: pets[index].imageUrl,
+                                                ),
+                                                CardTexts(
+                                                  widthA: constraints.maxWidth *
+                                                      0.4,
+                                                  name: pets[index].nickname,
+                                                  race: pets[index].breed,
+                                                  old: pets[index].age,
+                                                  sex: pets[index].gender,
+                                                  distance:
+                                                      pets[index].location,
+                                                ),
+                                                CardIcon(
+                                                  stars: pets[index].stars,
+                                                  width: constraints.maxWidth *
+                                                      0.13,
+                                                  height:
+                                                      constraints.maxHeight *
+                                                          0.4,
+                                                  sizeIcon:
+                                                      constraints.maxHeight *
+                                                          0.24,
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                                    ),
+                                  ),
+                                );
+                              }),
                 ),
               ),
             ],

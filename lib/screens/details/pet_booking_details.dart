@@ -3,73 +3,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../exports.dart';
 
-class PetDetails extends StatefulWidget {
+class PetBookingDetails extends StatefulWidget {
   final Pet pet;
   final String userID;
-  const PetDetails({super.key, required this.pet, required this.userID});
+  final String bid;
+  const PetBookingDetails(
+      {super.key, required this.pet, required this.userID, required this.bid});
 
   @override
-  State<PetDetails> createState() => _PetDetailsState();
+  State<PetBookingDetails> createState() => _PetBookingDetailsState();
 }
 
-class _PetDetailsState extends State<PetDetails> {
+class _PetBookingDetailsState extends State<PetBookingDetails> {
   late List<UserDetails> users = [];
   bool _isLoading = true;
-  int? likes;
-  bool _isLiking = false;
-  bool _isLiked = false;
-
   @override
   void initState() {
     super.initState();
     getUserDetails();
-  }
-
-  Future doLike() async {
-    String uid = widget.userID;
-    String pid = widget.pet.pid;
-    try {
-      setState(() {
-        _isLiking = true;
-      });
-      final data = {'userId': uid, 'petId': pid};
-      Response response =
-          await Dio().post("${Constants.uri}/favourites/add", data: data);
-      if (response.statusCode == 200) {
-        setState(() {
-          likes = likes! + 1;
-          _isLiked = true;
-          _isLiking = false;
-        });
-      }
-    } on DioError catch (e) {
-      switch (e.response!.statusCode) {
-        case 400:
-          setState(() {
-            likes = likes! + 1;
-            _isLiked = true;
-            _isLiking = false;
-          });
-          break;
-        case 500:
-          setState(() {
-            likes = likes! + 1;
-            _isLiked = true;
-            _isLiking = false;
-          });
-          break;
-        default:
-          setState(() {
-            likes = likes! + 1;
-            _isLiked = true;
-
-            _isLiking = false;
-          });
-          break;
-      }
-    }
   }
 
   Future getUserDetails() async {
@@ -89,9 +43,123 @@ class _PetDetailsState extends State<PetDetails> {
     }
   }
 
+  Future deleteBooking() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      final data = {'bookingId': widget.bid};
+
+      Response response =
+          await Dio().post("${Constants.uri}/delete/removeBooking", data: data);
+      if (response.statusCode == 200) {
+        showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  title: const Text("Removed Booking"),
+                  content: Text(response.data["message"]),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => HomePage()));
+                      },
+                      child: Container(
+                        color: Colors.blue,
+                        padding: const EdgeInsets.all(14),
+                        child: const Text(
+                          "OK",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ));
+      }
+      setState(() {
+        _isLoading = false;
+      });
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        case 500:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        default:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.toString()),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    likes = widget.pet.stars;
     return Scaffold(
       backgroundColor: Color(0xffffffff),
       extendBodyBehindAppBar: true,
@@ -185,31 +253,25 @@ class _PetDetailsState extends State<PetDetails> {
                                             ),
                                           ),
                                         ),
-                                        GestureDetector(
-                                          child: Icon(
-                                            Icons.favorite,
-                                            color: Colors.red,
-                                          ),
-                                          onTap: () => doLike(),
+                                        Icon(
+                                          Icons.favorite,
+                                          color: Colors.red,
+                                          size: 22,
                                         ),
                                         Padding(
                                           padding:
                                               EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                          child: _isLiking
-                                              ? CircularProgressIndicator(
-                                                  color: red,
-                                                )
-                                              : Text(
-                                                  (likes).toString(),
-                                                  textAlign: TextAlign.start,
-                                                  overflow: TextOverflow.clip,
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.w700,
-                                                    fontStyle: FontStyle.normal,
-                                                    fontSize: 20,
-                                                    color: Color(0xff000000),
-                                                  ),
-                                                ),
+                                          child: Text(
+                                            (widget.pet.stars).toString(),
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.clip,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontStyle: FontStyle.normal,
+                                              fontSize: 20,
+                                              color: Color(0xff000000),
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -531,7 +593,7 @@ class _PetDetailsState extends State<PetDetails> {
                                             padding: EdgeInsets.fromLTRB(
                                                 0, 16, 0, 0),
                                             child: Text(
-                                              "LIsted By::",
+                                              "Listed By::",
                                               textAlign: TextAlign.start,
                                               overflow: TextOverflow.clip,
                                               style: TextStyle(
@@ -561,13 +623,42 @@ class _PetDetailsState extends State<PetDetails> {
                                                     CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  Image(
-                                                    image:
-                                                        CachedNetworkImageProvider(
-                                                            users[0].urlImage),
-                                                    height: 80,
-                                                    width: 60,
-                                                    fit: BoxFit.cover,
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        PageRouteBuilder(
+                                                          pageBuilder: (context,
+                                                                  animation,
+                                                                  secondaryAnimation) =>
+                                                              ImageScreen(
+                                                                  imageUrl: users[
+                                                                          0]
+                                                                      .urlImage),
+                                                          transitionsBuilder:
+                                                              (context,
+                                                                  animation,
+                                                                  secondaryAnimation,
+                                                                  child) {
+                                                            return child;
+                                                          },
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: SizedBox(
+                                                      child: Hero(
+                                                        tag: 'imageTag',
+                                                        child: Image(
+                                                          image:
+                                                              CachedNetworkImageProvider(
+                                                                  users[0]
+                                                                      .urlImage),
+                                                          height: 60,
+                                                          width: 60,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                   Expanded(
                                                     flex: 1,
@@ -629,188 +720,223 @@ class _PetDetailsState extends State<PetDetails> {
                                                               ),
                                                             ),
                                                           ),
-                                                          Padding(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    0, 4, 0, 0),
-                                                            child: Text(
-                                                              "Reserve now to Get Contact Details",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .start,
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .clip,
-                                                              style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                fontStyle:
-                                                                    FontStyle
-                                                                        .normal,
-                                                                fontSize: 22,
-                                                                color: Color(
-                                                                    0xff000000),
-                                                              ),
-                                                            ),
-                                                          ),
                                                         ],
                                                       ),
                                                     ),
                                                   ),
-                                                  // Padding(
-                                                  //   padding:
-                                                  //       EdgeInsets.fromLTRB(
-                                                  //           8, 0, 0, 0),
-                                                  //   child: Column(
-                                                  //     mainAxisAlignment:
-                                                  //         MainAxisAlignment
-                                                  //             .start,
-                                                  //     crossAxisAlignment:
-                                                  //         CrossAxisAlignment
-                                                  //             .start,
-                                                  //     mainAxisSize:
-                                                  //         MainAxisSize.max,
-                                                  //     children: [
-                                                  //       IconButton(
-                                                  //         onPressed: () {},
-                                                  //         icon: Icon(
-                                                  //           Icons.favorite,
-                                                  //           color: Color(
-                                                  //               0xffff0004),
-                                                  //           size: 16,
-                                                  //         ),
-                                                  //       ),
-                                                  //     ],
-                                                  //   ),
-                                                  // ),
                                                 ],
+                                              ),
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            0, 4, 0, 0),
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          "Phone 1: ${users[0].mobile}",
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontStyle: FontStyle
+                                                                .normal,
+                                                            fontSize: 22,
+                                                            color: Color(
+                                                                0xff000000),
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          "Phone 2: ${users[0].phone}",
+                                                          textAlign:
+                                                              TextAlign.start,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontStyle: FontStyle
+                                                                .normal,
+                                                            fontSize: 22,
+                                                            color: Color(
+                                                                0xff000000),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsets.fromLTRB(
+                                                                0, 4, 5, 0),
+                                                        child: Text(
+                                                          "E-Mail:${users[0].email}",
+                                                          textAlign:
+                                                              TextAlign.justify,
+                                                          overflow:
+                                                              TextOverflow.clip,
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontStyle: FontStyle
+                                                                .normal,
+                                                            fontSize: 20,
+                                                            color: Color(
+                                                                0xff000000),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                child: Container(
+                                                  margin: EdgeInsets.all(16),
+                                                  padding: EdgeInsets.all(8),
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 60,
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0x003a57e8),
+                                                    shape: BoxShape.rectangle,
+                                                    borderRadius:
+                                                        BorderRadius.zero,
+                                                  ),
+                                                  child: MaterialButton(
+                                                    onPressed: () {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            Widget
+                                                                cancelButton =
+                                                                TextButton(
+                                                              child: Text(
+                                                                  "Cancel"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop(); // dismiss dialog
+                                                              },
+                                                            );
+                                                            Widget okButton =
+                                                                TextButton(
+                                                                    child: Text(
+                                                                        "Remove"),
+                                                                    onPressed:
+                                                                        () {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pop();
+                                                                      deleteBooking();
+                                                                    });
+                                                            return AlertDialog(
+                                                              title: Text(
+                                                                  "Confirm Action"),
+                                                              content: Text(
+                                                                  "Do you wish to remove the Booking? It is an non returnable action once commenced."),
+                                                              actions: [
+                                                                cancelButton,
+                                                                okButton,
+                                                              ],
+                                                            );
+                                                          });
+                                                    },
+                                                    color: Color(0xff245cb5),
+                                                    elevation: 0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      side: BorderSide(
+                                                          color:
+                                                              Color(0xff808080),
+                                                          width: 1),
+                                                    ),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 16,
+                                                            vertical: 8),
+                                                    textColor:
+                                                        Color(0xffffffff),
+                                                    height: 50,
+                                                    minWidth: 140,
+                                                    child: Text(
+                                                      "Remove Booking",
+                                                      style: TextStyle(
+                                                        fontSize: 22,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        margin: EdgeInsets.all(16),
-                                        padding: EdgeInsets.all(8),
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 60,
-                                        decoration: BoxDecoration(
-                                          color: Color(0x003a57e8),
-                                          shape: BoxShape.rectangle,
-                                          borderRadius: BorderRadius.zero,
-                                        ),
-                                        child: (widget.pet.uid == widget.userID)
-                                            ? MaterialButton(
-                                                onPressed: null,
-                                                color: Color(0xff245cb5),
-                                                elevation: 0,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.zero,
-                                                  side: BorderSide(
-                                                      color: Color.fromARGB(
-                                                          255, 255, 255, 255),
-                                                      width: 1),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 8),
-                                                textColor: Color.fromARGB(
-                                                    255, 0, 0, 0),
-                                                height: 50,
-                                                minWidth: 140,
-                                                child: Text(
-                                                  "This is your Pet.",
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontStyle: FontStyle.normal,
-                                                  ),
-                                                ),
-                                              )
-                                            : MaterialButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              BookingScreen(
-                                                                  pet: widget
-                                                                      .pet)));
-                                                },
-                                                color: Color(0xff245cb5),
-                                                elevation: 0,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  side: BorderSide(
-                                                      color: Color(0xff808080),
-                                                      width: 1),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 16,
-                                                    vertical: 8),
-                                                textColor: Color(0xffffffff),
-                                                height: 50,
-                                                minWidth: 140,
-                                                child: Text(
-                                                  "AdoptNow",
-                                                  style: TextStyle(
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontStyle: FontStyle.normal,
-                                                  ),
-                                                ),
-                                              ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
+                          // Align(
+                          //   alignment: Alignment.bottomCenter,
+                          //   child: Container(
+                          //     margin: EdgeInsets.all(16),
+                          //     padding: EdgeInsets.all(8),
+                          //     width: MediaQuery.of(context).size.width,
+                          //     height: 60,
+                          //     decoration: BoxDecoration(
+                          //       color: Color(0x003a57e8),
+                          //       shape: BoxShape.rectangle,
+                          //       borderRadius: BorderRadius.zero,
+                          //     ),
+                          //     child: MaterialButton(
+                          //       onPressed: () {
+                          //         print((widget.pet).toString());
+                          //         print(widget.userID);
+                          //       },
+                          //       color: Color(0xff245cb5),
+                          //       elevation: 0,
+                          //       shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.zero,
+                          //         side: BorderSide(color: Color(0xff808080), width: 1),
+                          //       ),
+                          //       padding:
+                          //           EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          //       textColor: Color(0xffffffff),
+                          //       height: 50,
+                          //       minWidth: 140,
+                          //       child: Text(
+                          //         "AdoptNow",
+                          //         style: TextStyle(
+                          //           fontSize: 22,
+                          //           fontWeight: FontWeight.w400,
+                          //           fontStyle: FontStyle.normal,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ),
-                        // Align(
-                        //   alignment: Alignment.bottomCenter,
-                        //   child: Container(
-                        //     margin: EdgeInsets.all(16),
-                        //     padding: EdgeInsets.all(8),
-                        //     width: MediaQuery.of(context).size.width,
-                        //     height: 60,
-                        //     decoration: BoxDecoration(
-                        //       color: Color(0x003a57e8),
-                        //       shape: BoxShape.rectangle,
-                        //       borderRadius: BorderRadius.zero,
-                        //     ),
-                        //     child: MaterialButton(
-                        //       onPressed: () {
-                        //         print((widget.pet).toString());
-                        //         print(widget.userID);
-                        //       },
-                        //       color: Color(0xff245cb5),
-                        //       elevation: 0,
-                        //       shape: RoundedRectangleBorder(
-                        //         borderRadius: BorderRadius.zero,
-                        //         side: BorderSide(color: Color(0xff808080), width: 1),
-                        //       ),
-                        //       padding:
-                        //           EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        //       textColor: Color(0xffffffff),
-                        //       height: 50,
-                        //       minWidth: 140,
-                        //       child: Text(
-                        //         "AdoptNow",
-                        //         style: TextStyle(
-                        //           fontSize: 22,
-                        //           fontWeight: FontWeight.w400,
-                        //           fontStyle: FontStyle.normal,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

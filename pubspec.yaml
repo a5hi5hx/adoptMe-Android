@@ -52,6 +52,7 @@ dependencies:
   badges: ^3.0.2
   carousel_slider: ^4.2.1
   cached_network_image: ^3.2.3
+  onesignal_flutter: ^3.5.1
 
 dev_dependencies:
   flutter_test:

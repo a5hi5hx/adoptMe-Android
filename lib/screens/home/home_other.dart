@@ -52,13 +52,19 @@ class _HomeOthersState extends State<HomeOthers> {
       setState(() {
         pets = (response.data as List).map((pet) => Pet.fromJson(pet)).toList();
         if (pets.isEmpty) {
-          _isEmpty = true;
+          setState(() {
+            _isEmpty = true;
+          });
           _showMaterialDialog("Empty", "No data to show");
         } else {
-          _isEmpty = false;
+          setState(() {
+            _isEmpty = false;
+          });
         }
 
-        _isLoading = false;
+        setState(() {
+          _isLoading = false;
+        });
         // print(pets);
       });
     } on DioError catch (e) {
@@ -73,8 +79,9 @@ class _HomeOthersState extends State<HomeOthers> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomeOthers()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
                         },
                         child: Container(
                           color: Colors.blue,
@@ -98,8 +105,9 @@ class _HomeOthersState extends State<HomeOthers> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomeOthers()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
                           // Navigator.of(context).pop();
                         },
                         child: Container(
@@ -124,8 +132,9 @@ class _HomeOthersState extends State<HomeOthers> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomeOthers()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
                           // Navigator.of(context).pop();
                         },
                         child: Container(

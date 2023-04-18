@@ -20,6 +20,7 @@ class BookService {
     Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userID = prefs.getString('_uid');
+
     // FormData formData = FormData.fromMap(<String, dynamic>{
     //   "petID": petID,
     //   "userID": userID,
@@ -27,8 +28,13 @@ class BookService {
     //   "time": time,
     // });
     try {
-      Response responseP = await dio.post("${Constants.uri}/book/bookPets",
-          data: {"userID": userID, "petID": petID, "date": date, "time": time});
+      Response responseP =
+          await dio.post("${Constants.uri}/book/bookPets", data: {
+        "userID": userID,
+        "petID": petID,
+        "date": date,
+        "time": time,
+      });
       // if (responseP.statusCode == 200) {
       // success
       showDialog(

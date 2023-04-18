@@ -51,7 +51,7 @@ class _MyBookingsState extends State<MyBookings> {
           _isEmpty = true;
           //_showMaterialDialog("Empty", "No data to show");
         }
-        _isEmpty = false;
+        _isEmpty = true;
         _isLoading = false;
         // print(pets);
       });
@@ -67,8 +67,11 @@ class _MyBookingsState extends State<MyBookings> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => HomePage()));
                         },
                         child: Container(
                           color: Colors.blue,
@@ -92,8 +95,11 @@ class _MyBookingsState extends State<MyBookings> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => HomePage()));
                           // Navigator.of(context).pop();
                         },
                         child: Container(
@@ -118,8 +124,11 @@ class _MyBookingsState extends State<MyBookings> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                          setState(() {
+                            _isEmpty = true;
+                          });
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => HomePage()));
                           // Navigator.of(context).pop();
                         },
                         child: Container(
@@ -171,9 +180,10 @@ class _MyBookingsState extends State<MyBookings> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => PetDetails(
+                                builder: (context) => PetBookingDetails(
                                   pet: bookings[index].pet,
                                   userID: userID as String,
+                                  bid: bookings[index].id,
                                 ),
                               ),
                             );

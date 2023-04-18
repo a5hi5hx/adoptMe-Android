@@ -67,8 +67,20 @@ class _MyPetsBookingsState extends State<MyPetsBookings> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => HomePage()));
+                          setState(() {
+                            // bookings = (response.data as List)
+                            //     .map((booking) => Booking.fromJson(booking))
+                            //     .toList();
+                            // if (response.data['message'] == "No bookings found") {
+                            //   _isEmpty = true;
+                            //   _showMaterialDialog("Empty", "No data to show");
+                            // }
+
+                            _isEmpty = true;
+                            _isLoading = false;
+                          });
                         },
                         child: Container(
                           color: Colors.blue,
@@ -92,9 +104,21 @@ class _MyPetsBookingsState extends State<MyPetsBookings> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => HomePage()));
                           // Navigator.of(context).pop();
+                          setState(() {
+                            // bookings = (response.data as List)
+                            //     .map((booking) => Booking.fromJson(booking))
+                            //     .toList();
+                            // if (response.data['message'] == "No bookings found") {
+                            //   _isEmpty = true;
+                            //   _showMaterialDialog("Empty", "No data to show");
+                            // }
+
+                            _isEmpty = true;
+                            _isLoading = false;
+                          });
                         },
                         child: Container(
                           color: Colors.blue,
@@ -118,9 +142,21 @@ class _MyPetsBookingsState extends State<MyPetsBookings> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(ctx).pop();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => HomePage()));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => HomePage()));
                           // Navigator.of(context).pop();
+                          setState(() {
+                            // bookings = (response.data as List)
+                            //     .map((booking) => Booking.fromJson(booking))
+                            //     .toList();
+                            // if (response.data['message'] == "No bookings found") {
+                            //   _isEmpty = true;
+                            //   _showMaterialDialog("Empty", "No data to show");
+                            // }
+
+                            _isEmpty = true;
+                            _isLoading = false;
+                          });
                         },
                         child: Container(
                           color: Colors.blue,

@@ -131,6 +131,105 @@ class _MyListedPetsState extends State<MyListedPets> {
     }
   }
 
+  Future deletePets(Pet pets) async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      final data = {'id': pets.pid};
+
+      Response response =
+          await Dio().post("${Constants.uri}/delete/removePet", data: data);
+
+      setState(() {
+        refresh();
+      });
+    } on DioError catch (e) {
+      switch (e.response?.statusCode) {
+        case 400:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          setState(() {
+                            _isEmpty = true;
+                          });
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        case 500:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.response?.data["msg"]),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          setState(() {
+                            _isEmpty = true;
+                          });
+
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+          break;
+        default:
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(e.toString()),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop();
+                          setState(() {
+                            _isEmpty = true;
+                          });
+                          // Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          color: Colors.blue,
+                          padding: const EdgeInsets.all(14),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ));
+      }
+    }
+  }
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -182,6 +281,34 @@ class _MyListedPetsState extends State<MyListedPets> {
                                 ),
                               ),
                             );
+                          },
+                          onLongPress: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  Widget cancelButton = TextButton(
+                                    child: Text("Cancel"),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pop(); // dismiss dialog
+                                    },
+                                  );
+                                  Widget okButton = TextButton(
+                                      child: Text("Delete"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        deletePets(pets[index]);
+                                      });
+                                  return AlertDialog(
+                                    title: Text("Confirm Action"),
+                                    content: Text(
+                                        "Do you wish to remove the Pet? It is an non returnable action once commenced."),
+                                    actions: [
+                                      cancelButton,
+                                      okButton,
+                                    ],
+                                  );
+                                });
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(5),
