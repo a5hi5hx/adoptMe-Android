@@ -43,7 +43,7 @@ class _HomeBirdsState extends State<HomeBirds> {
       _isLoading = true;
     });
     try {
-      final data = {'category': 'Birds'};
+      final data = {'category': 'Bird'};
       Response response =
           await Dio().post("${Constants.uri}/returnpets/pets", data: data);
       // print(response);
@@ -54,8 +54,11 @@ class _HomeBirdsState extends State<HomeBirds> {
             _isEmpty = true;
           });
           _showMaterialDialog("Empty", "No data to show");
+        } else {
+          _isEmpty = false;
         }
         _isLoading = false;
+
         // print(pets);
       });
     } on DioError catch (e) {

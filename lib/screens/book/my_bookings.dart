@@ -50,8 +50,9 @@ class _MyBookingsState extends State<MyBookings> {
         if (bookings.isEmpty) {
           _isEmpty = true;
           //_showMaterialDialog("Empty", "No data to show");
+        } else {
+          _isEmpty = false;
         }
-        _isEmpty = true;
         _isLoading = false;
         // print(pets);
       });

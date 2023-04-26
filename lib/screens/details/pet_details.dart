@@ -39,7 +39,7 @@ class _PetDetailsState extends State<PetDetails> {
           await Dio().post("${Constants.uri}/favourites/add", data: data);
       if (response.statusCode == 200) {
         setState(() {
-          likes = likes! + 1;
+          widget.pet.stars = widget.pet.stars + 1;
           _isLiked = true;
           _isLiking = false;
         });
@@ -48,21 +48,21 @@ class _PetDetailsState extends State<PetDetails> {
       switch (e.response!.statusCode) {
         case 400:
           setState(() {
-            likes = likes! + 1;
+            // widget.pet.stars = widget.pet.stars + 1;
             _isLiked = true;
             _isLiking = false;
           });
           break;
         case 500:
           setState(() {
-            likes = likes! + 1;
+            // widget.pet.stars = widget.pet.stars + 1;
             _isLiked = true;
             _isLiking = false;
           });
           break;
         default:
           setState(() {
-            likes = likes! + 1;
+            //widget.pet.stars = widget.pet.stars + 1;
             _isLiked = true;
 
             _isLiking = false;
@@ -91,7 +91,7 @@ class _PetDetailsState extends State<PetDetails> {
 
   @override
   Widget build(BuildContext context) {
-    likes = widget.pet.stars;
+    // likes = widget.pet.stars;
     return Scaffold(
       backgroundColor: Color(0xffffffff),
       extendBodyBehindAppBar: true,
@@ -200,7 +200,7 @@ class _PetDetailsState extends State<PetDetails> {
                                                   color: red,
                                                 )
                                               : Text(
-                                                  (likes).toString(),
+                                                  (widget.pet.stars).toString(),
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.clip,
                                                   style: TextStyle(
