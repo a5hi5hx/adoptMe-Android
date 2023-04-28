@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
         backgroundColor: Colors.white,
         body: Center(
           child: Image.asset(
-            "assets/splash/loading_2.gif",
+            "assets/splash/loading_2.png",
             height: 75.0,
             width: 75.0,
             fit: BoxFit.contain,

@@ -55,11 +55,10 @@ class _PetBookDetailsState extends State<PetBookDetails> {
             context: context,
             builder: (ctx) => AlertDialog(
                   title: const Text("Success"),
-                  content: Text(response.data["msg"]),
+                  content: Text(response.data["message"]),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () {
-                        Navigator.of(ctx).pop();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 MyPetsBookings()));
@@ -86,7 +85,7 @@ class _PetBookDetailsState extends State<PetBookDetails> {
               context: context,
               builder: (ctx) => AlertDialog(
                     title: const Text("Error"),
-                    content: Text(e.response?.data["msg"]),
+                    content: Text(e.response?.data["message"]),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
@@ -109,7 +108,7 @@ class _PetBookDetailsState extends State<PetBookDetails> {
               context: context,
               builder: (ctx) => AlertDialog(
                     title: const Text("Error"),
-                    content: Text(e.response?.data["msg"]),
+                    content: Text(e.response?.data["message"]),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
@@ -171,11 +170,10 @@ class _PetBookDetailsState extends State<PetBookDetails> {
             context: context,
             builder: (ctx) => AlertDialog(
                   title: const Text("Success"),
-                  content: Text(response.data["msg"]),
+                  content: Text(response.data["message"]),
                   actions: <Widget>[
                     TextButton(
                       onPressed: () {
-                        Navigator.of(ctx).pop();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (BuildContext context) =>
                                 MyPetsBookings()));
@@ -202,7 +200,7 @@ class _PetBookDetailsState extends State<PetBookDetails> {
               context: context,
               builder: (ctx) => AlertDialog(
                     title: const Text("Error"),
-                    content: Text(e.response?.data["msg"]),
+                    content: Text(e.response?.data["message"]),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {
@@ -225,7 +223,7 @@ class _PetBookDetailsState extends State<PetBookDetails> {
               context: context,
               builder: (ctx) => AlertDialog(
                     title: const Text("Error"),
-                    content: Text(e.response?.data["msg"]),
+                    content: Text(e.response?.data["message"]),
                     actions: <Widget>[
                       TextButton(
                         onPressed: () {

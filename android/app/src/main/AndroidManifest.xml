@@ -7,7 +7,7 @@
 
 
    <application
-        android:label="adoptme"
+        android:label="AdoptMe-Rehome a Pet"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

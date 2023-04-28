@@ -77,7 +77,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Padding(
                                 padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
                                 child: Text(
-                                  "Book Now To Reserve Me",
+                                  "Reserve Me Now to Get Information",
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.clip,
                                   style: TextStyle(
@@ -146,7 +146,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                     DateTime? pickedDate = await showDatePicker(
                                         context: context,
                                         initialDate: DateTime.now(),
-                                        firstDate: DateTime(2023),
+                                        firstDate: DateTime.now(),
                                         lastDate: DateTime(2024));
 
                                     if (pickedDate != null) {
@@ -231,6 +231,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                           TimeOfDay? pickedTime =
                                               await showTimePicker(
                                             initialTime: TimeOfDay.now(),
+                                            initialEntryMode:
+                                                TimePickerEntryMode.input,
                                             context: context,
                                           );
 

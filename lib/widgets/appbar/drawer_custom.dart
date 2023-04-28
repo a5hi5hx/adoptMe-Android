@@ -106,13 +106,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ),
           ListTile(
             leading: Icon(Icons.contact_page),
-            title: Text("About Me"),
+            title: Text("My Profile"),
             onTap: () {
               Navigator.pop(context);
               // showAboutDialog(
               //     context: context, children: [Text("Git Pull left")]);
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => UserProfile()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.contact_page),
+            title: Text("About Us"),
+            onTap: () {
+              Navigator.pop(context);
+              // showAboutDialog(
+              //     context: context, children: [Text("Git Pull left")]);
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => AboutUs()));
             },
           ),
         ],

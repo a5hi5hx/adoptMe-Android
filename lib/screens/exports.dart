@@ -22,3 +22,7 @@ export './book/my_pets_booked.dart';
 export './auth/reset_password/password_reset_initial.dart';
 export './user details/user_profile.dart';
 export './details/pet_booking_details.dart';
+export './aboutus/aboutus.dart';
+export './aboutus/privacy_policy.dart';
+export './aboutus/terms_condition.dart';
+export './aboutus/developers.dart';
