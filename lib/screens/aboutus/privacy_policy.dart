@@ -35,6 +35,42 @@ class PrivacyPolicy extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(
+              alignment: Alignment.center,
+              margin: EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+              padding: EdgeInsets.all(0),
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Color(0x00ffffff),
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(16.0),
+                border: Border.all(color: Color(0x4d9e9e9e), width: 1),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: Image(
+                  image: AssetImage("assets/splash/loading_2.png"),
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
+              child: Text(
+                "v1.0.0pre",
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  fontSize: 12,
+                  color: Color(0xff7b7b7b),
+                ),
+              ),
+            ),
             Text(
               "AdoptMe-Rehome a Pet",
               textAlign: TextAlign.start,
@@ -45,6 +81,9 @@ class PrivacyPolicy extends StatelessWidget {
                 fontSize: 24,
                 color: Color(0xff000000),
               ),
+            ),
+            SizedBox(
+              height: 10,
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 0, horizontal: 16),

@@ -393,7 +393,7 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                                       child: Text(
-                                        "${widget.bookings.pet.gender}, ${widget.bookings.pet.category},  ${widget.bookings.pet.breed}",
+                                        "${widget.bookings.pet.gender}, ${widget.bookings.pet.category}, ${widget.bookings.pet.breed}",
                                         textAlign: TextAlign.start,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(
@@ -500,7 +500,7 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      widget.bookings.pet.age,
+                                                      "${widget.bookings.pet.age}yrs",
                                                       textAlign:
                                                           TextAlign.start,
                                                       overflow:
@@ -555,7 +555,7 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  widget.bookings.pet.weight,
+                                                  "${widget.bookings.pet.weight}kgs",
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.clip,
                                                   style: TextStyle(
@@ -568,6 +568,19 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                               ],
                                             ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(5, 20, 5, 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
                                           Container(
                                             height: 70,
                                             width: 100,
@@ -633,19 +646,6 @@ class _PetBookDetailsState extends State<PetBookDetails> {
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(5, 20, 5, 10),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
                                           Container(
                                             height: 70,
                                             width: 100,

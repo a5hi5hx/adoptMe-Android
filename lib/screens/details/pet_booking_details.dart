@@ -278,7 +278,7 @@ class _PetBookingDetailsState extends State<PetBookingDetails> {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                                       child: Text(
-                                        "${widget.pet.gender}, ${widget.pet.category},  ${widget.pet.breed}",
+                                        "${widget.pet.gender}, ${widget.pet.category}, ${widget.pet.breed}",
                                         textAlign: TextAlign.start,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(
@@ -385,7 +385,7 @@ class _PetBookingDetailsState extends State<PetBookingDetails> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      widget.pet.age,
+                                                      "${widget.pet.age}yrs",
                                                       textAlign:
                                                           TextAlign.start,
                                                       overflow:
@@ -440,7 +440,7 @@ class _PetBookingDetailsState extends State<PetBookingDetails> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  widget.pet.weight,
+                                                  "${widget.pet.weight}kgs",
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.clip,
                                                   style: TextStyle(
@@ -453,6 +453,19 @@ class _PetBookingDetailsState extends State<PetBookingDetails> {
                                               ],
                                             ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.fromLTRB(5, 20, 5, 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
                                           Container(
                                             height: 70,
                                             width: 100,
@@ -518,19 +531,6 @@ class _PetBookingDetailsState extends State<PetBookingDetails> {
                                               ],
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.fromLTRB(5, 20, 5, 10),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
                                           Container(
                                             height: 70,
                                             width: 100,

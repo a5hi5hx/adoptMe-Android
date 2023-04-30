@@ -216,7 +216,7 @@ class _PetDetailsState extends State<PetDetails> {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                                       child: Text(
-                                        "${widget.pet.gender}, ${widget.pet.category},  ${widget.pet.breed}",
+                                        "${widget.pet.gender}, ${widget.pet.category}, ${widget.pet.breed}",
                                         textAlign: TextAlign.start,
                                         overflow: TextOverflow.clip,
                                         style: TextStyle(
@@ -307,7 +307,7 @@ class _PetDetailsState extends State<PetDetails> {
                                                           .spaceEvenly,
                                                   children: [
                                                     Text(
-                                                      "Age",
+                                                      "Age:",
                                                       textAlign:
                                                           TextAlign.start,
                                                       overflow:
@@ -323,7 +323,7 @@ class _PetDetailsState extends State<PetDetails> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      widget.pet.age,
+                                                      "${widget.pet.age} yrs",
                                                       textAlign:
                                                           TextAlign.start,
                                                       overflow:
@@ -334,8 +334,7 @@ class _PetDetailsState extends State<PetDetails> {
                                                         fontStyle:
                                                             FontStyle.normal,
                                                         fontSize: 20,
-                                                        color:
-                                                            Color(0xff23751a),
+                                                        color: Colors.black,
                                                       ),
                                                     ),
                                                   ],
@@ -367,18 +366,18 @@ class _PetDetailsState extends State<PetDetails> {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Text(
-                                                  "Weight",
+                                                  "Weight:",
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.clip,
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.w700,
                                                     fontStyle: FontStyle.normal,
                                                     fontSize: 20,
-                                                    color: Color(0xff000000),
+                                                    color: Colors.black,
                                                   ),
                                                 ),
                                                 Text(
-                                                  widget.pet.weight,
+                                                  "${widget.pet.weight} kg",
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.clip,
                                                   style: TextStyle(
@@ -387,71 +386,6 @@ class _PetDetailsState extends State<PetDetails> {
                                                     fontSize: 20,
                                                     color: Color(0xff000000),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            height: 70,
-                                            width: 100,
-                                            padding: EdgeInsets.only(
-                                                left: 10, right: 5),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white24,
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(16.0)),
-                                              boxShadow: <BoxShadow>[
-                                                BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.2),
-                                                    offset:
-                                                        const Offset(1.1, 1.1),
-                                                    blurRadius: 8.0),
-                                              ],
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    Text(
-                                                      "Color",
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontSize: 20,
-                                                        color: Color.fromARGB(
-                                                            255, 1, 5, 0),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      widget.pet.color,
-                                                      textAlign:
-                                                          TextAlign.start,
-                                                      overflow:
-                                                          TextOverflow.clip,
-                                                      style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                        fontStyle:
-                                                            FontStyle.normal,
-                                                        fontSize: 20,
-                                                        color:
-                                                            Color(0xff23751a),
-                                                      ),
-                                                    ),
-                                                  ],
                                                 ),
                                               ],
                                             ),
@@ -488,12 +422,75 @@ class _PetDetailsState extends State<PetDetails> {
                                                     blurRadius: 8.0),
                                               ],
                                             ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    Text(
+                                                      "Color:",
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontSize: 20,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      widget.pet.color,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                        fontStyle:
+                                                            FontStyle.normal,
+                                                        fontSize: 20,
+                                                        color: Colors.black,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 70,
+                                            width: 100,
+                                            padding: EdgeInsets.only(
+                                                left: 10, right: 5),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white24,
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(16.0)),
+                                              boxShadow: <BoxShadow>[
+                                                BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    offset:
+                                                        const Offset(1.1, 1.1),
+                                                    blurRadius: 8.0),
+                                              ],
+                                            ),
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 Text(
-                                                  "Health",
+                                                  "Health:",
                                                   textAlign: TextAlign.start,
                                                   overflow: TextOverflow.clip,
                                                   style: TextStyle(

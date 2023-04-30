@@ -37,28 +37,28 @@ class AboutUs extends StatelessWidget {
               alignment: Alignment.center,
               margin: EdgeInsets.symmetric(vertical: 16, horizontal: 0),
               padding: EdgeInsets.all(0),
-              width: 80,
-              height: 80,
+              width: 100,
+              height: 100,
               decoration: BoxDecoration(
                 color: Color(0x00ffffff),
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(16.0),
                 border: Border.all(color: Color(0x4d9e9e9e), width: 1),
               ),
-              child:
-
-                  ///***If you have exported images you must have to copy those images in assets/images directory.
-                  Image(
-                image: AssetImage("assets/splash/loading_2.png"),
-                height: 50,
-                width: 50,
-                fit: BoxFit.contain,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16.0),
+                child: Image(
+                  image: AssetImage("assets/splash/loading_2.png"),
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 50),
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 25),
               child: Text(
-                "v1.0.0",
+                "v1.0.0pre",
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.clip,
                 style: TextStyle(
@@ -69,97 +69,98 @@ class AboutUs extends StatelessWidget {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(16),
+            InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Developers()));
+              },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Developers()));
-                    },
-                    child: Expanded(
-                      flex: 1,
-                      child: Text(
-                        "Developer Team",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 16,
-                          color: Color(0xff000000),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          "Developer Team",
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(16),
+            SizedBox(height: 10),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TermsAndConditions()));
+              },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TermsAndConditions()));
-                    },
-                    child: Expanded(
-                      flex: 1,
-                      child: Text(
-                        "Terms & Conditions",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 16,
-                          color: Color(0xff000000),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          "Terms and Conditions",
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.all(16),
+            SizedBox(height: 10),
+            InkWell(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PrivacyPolicy()));
+              },
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
                 children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PrivacyPolicy()));
-                    },
-                    child: Expanded(
-                      flex: 1,
-                      child: Text(
-                        "Privacy Policy",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 16,
-                          color: Color(0xff000000),
+                  Padding(
+                    padding: EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          "Privacy Policy",
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ],

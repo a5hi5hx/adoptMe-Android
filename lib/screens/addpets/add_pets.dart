@@ -158,7 +158,8 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                         autocorrect: false,
                         textCapitalization: TextCapitalization.words,
                         inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
+                          FilteringTextInputFormatter.allow(
+                              RegExp('[a-zA-Z ]')),
                         ],
                         controller: _nicknameController,
                         obscureText: false,
@@ -306,7 +307,7 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                           textCapitalization: TextCapitalization.words,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
-                                RegExp('[a-zA-Z]')),
+                                RegExp('[a-zA-Z ]')),
                           ],
                           controller: _breedController,
                           obscureText: false,
@@ -406,9 +407,6 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                             value!.isEmpty ? 'Age cannot be blank' : null,
                         keyboardType: TextInputType.numberWithOptions(
                             signed: false, decimal: false),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
                         controller: _ageController,
                         obscureText: false,
                         textAlign: TextAlign.start,
@@ -435,14 +433,14 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                             borderSide:
                                 BorderSide(color: Color(0xff000000), width: 1),
                           ),
-                          labelText: "Age",
+                          labelText: "Age (in Years)",
                           labelStyle: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
                             fontSize: 16,
                             color: Color(0xff6f6d6d),
                           ),
-                          hintText: "Enter age",
+                          hintText: "Enter age in years",
                           hintStyle: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
@@ -463,10 +461,10 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                           validator: (value) =>
                               value!.isEmpty ? 'Weight cannot be blank' : null,
                           keyboardType: TextInputType.numberWithOptions(
-                              signed: false, decimal: false),
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
+                              signed: false, decimal: true),
+                          // inputFormatters: [
+                          //   FilteringTextInputFormatter.digitsOnly
+                          // ],
                           controller: _weightController,
                           obscureText: false,
                           textAlign: TextAlign.start,
@@ -493,7 +491,7 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                               borderSide: BorderSide(
                                   color: Color(0xff000000), width: 1),
                             ),
-                            labelText: "Weight",
+                            labelText: "Weight (in Kgs)",
                             labelStyle: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
@@ -526,7 +524,7 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                           textCapitalization: TextCapitalization.words,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
-                                RegExp('[a-zA-Z]')),
+                                RegExp('[a-zA-Z ]')),
                           ],
                           controller: _colorController,
                           obscureText: false,
@@ -588,7 +586,7 @@ class _EnterPetDetailsState extends State<EnterPetDetails> {
                           textCapitalization: TextCapitalization.words,
                           inputFormatters: [
                             FilteringTextInputFormatter.allow(
-                                RegExp('[a-zA-Z]')),
+                                RegExp('[a-zA-Z0-9 ]')),
                           ],
                           controller: _locationController,
                           obscureText: false,
